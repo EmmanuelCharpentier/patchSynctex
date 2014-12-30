@@ -1,0 +1,21 @@
+Package: patchSynctex
+Type: Package
+Title: Allows for communication between .Rnw editor and .pdf viewer.
+Version: 0.1-0
+Date: 2014-12-28
+Author: Jan Gleixner [aut],
+	Emmanuel Charpentier [aut, cre]
+Maintainer: Emmanuel Charpentier <emm.charpentier@free.fr>
+Authors@R: as.person(c(person(given="Jan", family="Gleixner",
+                    email="jan.gleixner@gmail.com", role="aut"),
+	     person(given="Emmanuel", family="Charpentier",
+	     	    email="emm.charpentier@free.fr", role=c("aut", "cre"))))
+Depends: tools, stringr
+Enhances: knitr, utils
+Description: Utility patching the .synctec(.gz) file resulting from
+	     the \LaTeX{}ing of a .tex file with the concordance
+	     information from the .concordance.tex file resulting from
+	     knitting (possibly Sweaving) of the .Rnw source, allowing
+	     (for|back)ward searching from the editor to the viewer
+	     and back.
+License: GPL(>=2)
