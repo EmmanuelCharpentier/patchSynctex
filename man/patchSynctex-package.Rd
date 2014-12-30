@@ -15,7 +15,7 @@ Utility patching the .synctec(.gz) file resulting from then
 \details{ \tabular{ll}{
     Package: \tab patchSynctex\cr
     Type: \tab Package\cr
-    Version: \tab 1.0\cr
+    Version: \tab 0.1-0\cr
     Date: \tab 2014-12-28\cr
     License: \tab GPL (>=2)\cr
 }
@@ -40,18 +40,19 @@ a \code{concordance=TRUE} option. This \code{-concordance.tex} file
 contains an RLE encoding of the correspondence between the \code{.Rnw}
 source and the \code{.tex} intermediary file.
 
-\strong{patchDVI} uses this concordance information to patch the DVI or
-PDF pointers to source with the relevant pointers to the \code{.Rnw}
-file.
+\strong{patchDVI} uses this concordance information to patch the DVI
+pointers to source with the relevant pointers to the \code{.Rnw} file.
 
-This package also has a \code{patchSynctex} function. However, some most PDFs happen to be impenetrable to the
-\code{patchSynctex} function.
+This package also has a \code{patchSynctex} function, attempting t find
+the relevant information in the \code{.pdf} file. However, some (most ?)
+PDFs happen to be impenetrable to the \code{patchSynctex} function.
 
 The present package aims at patching the \code{.synctex(.gz)} file with
-pointers to the original \code{.Rnw} source(s). Therefore, the tools
-(editors and viewers) must support Synctex in such a way that, when a
-\code{.synctex(.gz)} file is present, this information is preffered to
-the information present in the DVI or PDF document.
+pointers to the original \code{.Rnw} source(s), using exclusively the
+\code{.synctex(.gz)} file as a source of information. Therefore, the
+tools (editors and viewers) must support Synctex in such a way that,
+when a \code{.synctex(.gz)} file is present, this information is
+preffered to the information present in the DVI or PDF document.
 
 This turns out, according to some serious googling and limited testing,
 to be the case with :
@@ -64,31 +65,9 @@ to be the case with :
   %% TODO : Mac OS X
 }
 
-%% \itemize{
-%%   \item Linux:
-%%   \itemize{
-%%     \item Editors:\itemize {
-%%       \item \code{emacs}
-%%       \item \code{gedit}
-%%     }
-%%     \item Viewers:\itemize{
-%%       \item \code{evince}
-%%       \item \code{okular}
-%%     }
-%%     }
-%%   \item{MS-Windows:\itemize{
-%%       \item{Editors:\itemize{
-%% 	  \item{emacs}
-%% 	}
-%%       }
-%%       \item{Viewers:\itemize{
-%% 	  \item Sumatra
-%% 	}
-%%       }
-%%     }
-%%   }
-%%   % TODO : Mac OS X.
-%% }
+Furthermore, the \code{.synctex(.gz)} file file remains necessary for
+any synchronization, whereas a patched \code{.dvi} file can in principle
+be used without the \code{.synctex(.gz)} file.
 
 This package is mostly aimed at \strong{programs} (integrated
 development environments (IDEs), such as \code{RStudio}, or programmable
@@ -97,55 +76,113 @@ code: it gives them an easy-to-use interface to a simple function does
 the ncessary patches for a given document (characterized by its name
 sans extension).
 
-Its unique functin can still be used from an interactive R session for
+Its unique function can still be used from an interactive R session for
 debugging purposes.
 }
 
 \section{Integration in editors and IDEs}{
   \emph{This section will be enriched by \strong{your} contributions.}
-  \subsection{ESS under \code{emacs}}{
+  \subsection{\code{ESS} under \code{emacs}}{
     The logical point of insertion of \code{.synctex(.gz)} patching is
     after each PDF compilation. It may be a bit wasteful (when two or
     more compilations are necessary, in order, for example, to fix
     references), but there is no standard way to determine if a LaTeX run
     is final.
+
+    This can be achieved by placing an advice on the function used to
+    compile to PDF|DVI. The example shows how to advice PDF compilation.
+    
     \subsection{Up to \code{emacs} 24.3}{
       The following \code{elisp} snippet can be placed in your
       \code{emacs} initialization file (e. g. \code{~/.emacs} in
       Unix(-like) systems): 
       \preformatted{
-defadvice ess-swv-PDF (after ess-run-patchKnitr (&optional
-                                                  PDFLATEX-CMD)
-                              activate)
+(defadvice ess-swv-PDF (after ess-run-patchKnitr (&optional
+						  PDFLATEX-CMD)
+			      activate)
   "Patches the .synctex.gz file after PDF compilation"
   (interactive)
-  (let* ((fe (file-name-extension (buffer-file-name))))
+  (let* ((fn (buffer-file-name))
+	 (fe (file-name-extension fn)))
     (if (string= fe "Rnw")
-        (ess-swv-run-in-R "patchKnitrSynctex")))
+	(progn
+	  (setq RPScmd (concat "patchSynctex('"
+			       (file-name-sans-extension fn)
+			       "')"))
+	  (ess-create-temp-buffer "tampon-ess-execute")
+	  (ess-execute "require(patchSynctex)" 'buffer "tampon-ess-execute")
+	  (ess-execute RPScmd 'buffer "tampon-ess-execute")
+	  (kill-buffer "tampon-ess-execute")))))
 (ad-activate 'ess-swv-PDF)
       }
     }
+    
     \subsection{From \code{emacs} 24.4 onwards}{
       The previous \code{elisp} snippet has to be adapted to the newer
       \code{advice} system of \code{elisp}:
       \preformatted{
+
 (defun ess-swv-patch-after-PDF (&optional PDFLATEX-CMD)
   "Patch the synctex file after PDF compilation"
-  (let* ((fe (file-name-extension (buffer-file-name))))
+  (let* ((fn (buffer-file-name))
+	 (fe (file-name-extension fn)))
     (if (string= fe "Rnw")
-        (ess-swv-run-in-R "patchKnitrSynctex"))))
+	(progn
+	  (setq RPScmd (concat "patchSynctex('"
+			       (file-name-sans-extension fn)
+			       "')"))
+	  (ess-create-temp-buffer "tampon-ess-execute")
+	  (ess-execute "require(patchSynctex)" 'buffer "tampon-ess-execute")
+	  (ess-execute RPScmd 'buffer "tampon-ess-execute")
+	  (kill-buffer "tampon-ess-execute")))))
 (advice-add 'ess-swv-PDF :after #'ess-swv-patch-after-PDF)
       }
     }
   }
-}
+  \subsection{\code{AUCTeX} under \code{emacs}}{
+
+    This is a work in progress : \code{AUCTeX} is more sophisticated
+  than \code{ESS} about PDF production. There is no single function to
+  advice (and \code{knit}ting is not yet well integrated, by the
+  way...). In the meantime, \code{ESS} functions remain
+  available. \emph{Stay tuned...}
+  
+  }
+  \subsection{Eclipse + StatET}{
+   Create an external build configuration (Sweave document processing)
+  and place :
+  \preformatted{
+require(knitr); 
+opts_knit$set(concordance = TRUE); 
+texfile <- knit("${resource_loc:${source_file_path}}", encoding="UTF-8")
+    }
+    in the \code{sweave} tab, and :
+    \preformatted{
+syntex <- if (opts_knit$get('concordance'))"-synctex=1" else "-synctex=0";
+command=paste("latexmk -pdf", syntex, "-interaction=nonstopmode", shQuote(texfile));
+print(paste("Command ",command,"...\n"));
+print(shell(command),intern = TRUE);
+if (opts_knit$get('concordance'))\{
+    require(patchSynctex);
+    patchSynctex(texfile); 
+\}
+print(paste0(substr(texfile,1, nchar(texfile)-3), "pdf"))
+      }
+      in the\code{LaTeX} tab.
+    }
+  }
 
 \author{Jan Gleixner, Emmanuel Charpentier
 
-Maintainer: Emmanuel Charpentier \url{emm.charpentier@free.fr}
-}
+Maintainer: Emmanuel Charpentier \url{emm.charpentier@free.fr} }
+
 \references{
-~~ Literature or other references for background information ~~
+
+  Duncan Murdoch's
+\href{http://cran.r-project.org/web/packages/patchDVI/index.html}{patchDVI}
+has a great vignette explaining the basics of the problem :
+\url{http://cran.r-project.org/web/packages/patchDVI/patchDVI.pdf}
+
 }
 %% ~~ Optionally other standard keywords, one per line, from file KEYWORDS in ~~
 %% ~~ the R documentation directory ~~

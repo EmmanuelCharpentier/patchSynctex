@@ -59,7 +59,7 @@ function (nwfile, verbose=FALSE, ...){
             writeLines(lines, sf, sep = "\n")
             close(sf);
             if (verbose) {
-                message(length(needReplacment), "patches made to ",
+                message(length(needReplacment), " patches made to ",
                         syncF, appendLF=TRUE);
             }
         }else{

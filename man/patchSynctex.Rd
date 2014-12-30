@@ -17,10 +17,10 @@ patchSynctex(nwfile, verbose=FALSE, ...)
 \arguments{
   \item{nwfile}{ name of the file to patch (used sans extension).  }
   \item{verbose}{ if TRUE, emit a message stating the number of
-    patches. }
+    patches. Useful for debugging integration in your tools. }
   \item{\dots}{
-    Unused. Allows \code{.ess_sweave} to pass its beloved
-    \code{encoding="utf8"} option without causing an error.
+    Unused. Allows any argument forced by your tools to be passed
+    without causing an error.
   }
 }
 
