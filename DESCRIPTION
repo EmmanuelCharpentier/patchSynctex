@@ -1,12 +1,12 @@
 Package: patchSynctex
 Type: Package
-Title: Allows for communication between .Rnw editor and .pdf viewer.
+Title: Allows for Communication between Text Editor and PDF Viewer
 Version: 0.1-0
-Date: 2014-12-28
-Authors@R: as.person(c(person(given="Jan", family="Gleixner",
+Date: 2015-01-10
+Authors@R: c(person(given="Jan", family="Gleixner",
                     email="jan.gleixner@gmail.com", role="aut"),
 	     person(given="Emmanuel", family="Charpentier",
-	     	    email="emm.charpentier@free.fr", role=c("aut", "cre"))))
+	     	    email="emm.charpentier@free.fr", role=c("aut", "cre")))
 Depends: tools, stringr
 Enhances: knitr, utils
 Description: Utility patching the .synctec(.gz) file resulting from
