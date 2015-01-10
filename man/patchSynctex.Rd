@@ -62,9 +62,9 @@ Duncan Murdoch's excellent \code{patchDVI} package:
 }
 
 \author{Jan Gleixner, Emmanuel Charpentier \email{emm.charpentier@free.fr}}
-%% \note{
-%% %%  ~~further notes~~
-%% }
+
+\note{ The current (1.8) version of \code{knitr} does not yet implement
+concordance for multifile projects (i. e. children chunks). }
 
 %% %% ~Make other sections like Warning with \section{Warning }{....} ~
 

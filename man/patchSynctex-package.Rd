@@ -176,6 +176,9 @@ print(paste0(substr(texfile,1, nchar(texfile)-3), "pdf"))
 
 Maintainer: Emmanuel Charpentier \url{emm.charpentier@free.fr} }
 
+\note{ The current (1.8) version of \code{knitr} does not yet implement
+concordance for multifile projects (i. e. children chunks). }
+
 \references{
 
   Duncan Murdoch's
