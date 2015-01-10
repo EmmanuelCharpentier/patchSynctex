@@ -50,11 +50,6 @@ patchSynctex(nwfile, verbose=FALSE, ...)
 }
 
 \value{Nothing useful.}
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 
 \references{
 Duncan Murdoch's excellent \code{patchDVI} package:
@@ -66,11 +61,6 @@ Duncan Murdoch's excellent \code{patchDVI} package:
 \note{ The current (1.8) version of \code{knitr} does not yet implement
 concordance for multifile projects (i. e. children chunks). }
 
-%% %% ~Make other sections like Warning with \section{Warning }{....} ~
-
-%% \seealso{
-%% %% ~~objects to See Also as \code{\link{help}}, ~~~
-%% }
 \examples{
 if(requireNamespace("tools", quietly=TRUE) &&
    requireNamespace("knitr", quietly=TRUE)) {
@@ -105,26 +95,18 @@ intermediate file.
 \\\\end{document}
 "
     require(knitr)
-    ## TD<-tempdir()
-    ## TR<-file.path(TD,"Minimal.Rnw")
-    ## cat(RnwSrc,file=TR)
     cat(RnwSrc, file="Minimal.Rnw")
     knit2pdf("Minimal.Rnw", quiet=TRUE)
-    ## TB<-gsub(".Rnw$","",TR)
-    ## TS<-gsub(".Rnw$",".synctex.gz",TR)
     D1<-file.info("Minimal.synctex.gz")$mtime
     patchSynctex("Minimal", verbose=TRUE)
+    ## should print a message telling the number of patches
     D2<-file.info("Minimal.synctex.gz")$mtime
     D1!=D2
-    ## TP<-gsub(".Rnw$",".pdf",TR)
-    ## should print a message telling the number of patches
-    ## and return TRUE
+    ## should return TRUE
+    ## To see the effect, try (example on a Linux system)
     \dontrun{system("evince Minimal.pdf")}
 }
 }
-
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 
 \keyword{ ~interface }
 \keyword{ ~documentation }% __ONLY ONE__ keyword per line
