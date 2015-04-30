@@ -7,13 +7,20 @@ function (nwfile, verbose=FALSE, ...){
     text<-readChar(f, file.info(f)$size);
     text<-gsub(" \\%\\n"," ",text)
     ## require(stringr)
-    re="\\\\Sconcordance\\{concordance:([^:]*):([^\\%]*):\\%\\r?\\n(\\d+)(( \\d+ \\d+)*)\\}";
+    ## re="\\\\Sconcordance\\{concordance:([^:]*):([^\\%]*):\\%\\r?\\n(\\d+)(( \\d+ \\d+)*)\\}";
+    ## Daniel Hicks :
+	re="\\\\Sconcordance\\{concordance:([^:]*):([^\\%]*):\\%\\r?\\n(\\d+ )((\\d+ \\d+[ \\}]\\%?\\r?\\n?)*)";
     parsed=str_match_all(text,re);
     for(i in seq(1,nrow(parsed[[1]]))){		
         texF=parsed[[1]][i,2];
         rnwF=parsed[[1]][i,3];
         startLine=as.integer(parsed[[1]][i,4]);
-        rleValues <- read.table(textConnection(parsed[[1]][i,5]));
+        ## rleValues <- read.table(textConnection(parsed[[1]][i,5]));
+        ## Daniel Hicks :
+        ## Clean newlines and braces from the line concordance data
+        parsedi5_clean <- gsub('[^[:digit:] ]', '', parsed[[1]][i,5])
+        ## Coerce cleaned line concordance data to table of values
+        rleValues <- read.table(textConnection(parsedi5_clean));
         rleO = rle(0);
         rleO$values=as.numeric(rleValues[seq(2,length(rleValues),2)]);
         rleO$lengths=as.integer(rleValues[seq(1,length(rleValues),2)]);

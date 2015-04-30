@@ -1,0 +1,7 @@
+== REVISION HISTORY ==
+
+0.1-0 : Initial packaging of Jan Gleixner's PatchKnitrSynctex R
+        function, with amends.
+0.1-1 : - Daniel Hicks' proposed modification to the manageent of large
+          files.
+	- Added this NEWS file.

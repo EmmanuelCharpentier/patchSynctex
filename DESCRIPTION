@@ -1,10 +1,11 @@
 Package: patchSynctex
 Type: Package
 Title: Communication between Editor and Viewer for Literate Programs
-Version: 0.1-0
-Date: 2015-01-10
+Version: 0.1-1
+Date: 2015-04-30
 Authors@R: c(person(given="Jan", family="Gleixner",
                     email="jan.gleixner@gmail.com", role="aut"),
+	     person(given="Daniel", family="Hicks", role="ctb"),
 	     person(given="Emmanuel", family="Charpentier",
 	     	    email="emm.charpentier@free.fr", role=c("aut", "cre")))
 Depends: tools, stringr
