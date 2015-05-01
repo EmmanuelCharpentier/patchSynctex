@@ -2,7 +2,8 @@
 
 0.1-0 : Initial packaging of Jan Gleixner's PatchKnitrSynctex R
         function, with amends.
-0.1-1 : - Daniel Hicks' proposed modification to the manageent of large
+0.1-1 : - Daniel Hicks' proposed modification to the management of large
           files.
 	- Added this NEWS file.
-T.b.D : - Added README.md
+0.1-2 : - Added README.md
+      	- Added URL field pointing to the Github repository.

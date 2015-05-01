@@ -1,8 +1,8 @@
 Package: patchSynctex
 Type: Package
 Title: Communication Between Editor and Viewer for Literate Programs
-Version: 0.1-1
-Date: 2015-04-30
+Version: 0.1-2
+Date: 2015-05-01
 Authors@R: c(person(given="Jan", family="Gleixner",
                     email="jan.gleixner@gmail.com", role="aut"),
 	     person(given="Daniel", family="Hicks", role="ctb"),
@@ -19,3 +19,4 @@ Description: This utility eases the debugging of literate documents
 	     a viewer (visualizing the resultant 'PDF'), thus bypassing
 	     the intermediate 'TeX' file.
 License: GPL(>=2)
+URL: https://github.com/EmmanuelCharpentier/patchSynctex

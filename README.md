@@ -7,7 +7,7 @@ wishing to access Jan Gleixner's patchKnitrSynctex may do so on its
 own Github page <https://github.com/jan-glx/patchKnitrSynctex>. An
 archival copy of its state when I forked this program is available at
 <https://github.com/EmmanuelCharpentier/patchKnitrSynctex>, but is,
-intentionnaly, not maintained.
+intentionally, not maintained.
 
 I choose to ignore the standalone C++ program, which is difficult to
 maintain cross-platform, and concentrated on the R version.
