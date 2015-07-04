@@ -1,3 +1,4 @@
 export("patchSynctex")
 importFrom(tools, file_path_sans_ext)
 importFrom(stringr, str_match, str_match_all)
+importFrom(utils, read.table)
