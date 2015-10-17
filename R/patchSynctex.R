@@ -6,6 +6,7 @@ function (nwfile, verbose=FALSE, ...){
         stop(f,"-concordance.tex file not found.", call.=TRUE)
     text<-readChar(f, file.info(f)$size);
     text<-gsub(" \\%\\n"," ",text)
+    text<-gsub(" \\%\\r\\n"," ",text)
     ## require(stringr)
     ## re="\\\\Sconcordance\\{concordance:([^:]*):([^\\%]*):\\%\\r?\\n(\\d+)(( \\d+ \\d+)*)\\}";
     ## Daniel Hicks :
