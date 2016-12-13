@@ -1,5 +1,5 @@
 patchSynctex <-
-function (nwfile, verbose=FALSE, ...){
+function (nwfile, syncfile=NULL, verbose=FALSE, ...){
     ## require(tools)
     f=paste0(tools::file_path_sans_ext(nwfile), "-concordance.tex")
     if (!file.exists(f)) 
@@ -26,10 +26,14 @@ function (nwfile, verbose=FALSE, ...){
         rleO$lengths=as.integer(rleValues[seq(1,length(rleValues),2)]);
         diffs=inverse.rle(rleO);
         mapping_=c(startLine,startLine+cumsum(diffs[-1]));
-        
-        basename <- tools::file_path_sans_ext(rnwF);		
-        syncF = paste0(basename,".synctex");
-        
+
+        basename <- tools::file_path_sans_ext(rnwF);
+        if(is.null(syncfile)) {
+          syncF = paste0(basename,".synctex");
+        } else {
+          syncF = paste0(syncfile,".synctex");
+        }
+
         compressed <- FALSE
         if (file.exists(syncF)) {
             sf=file(syncF);
