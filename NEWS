@@ -8,3 +8,6 @@
 0.1-2 : - Added README.md
       	- Added URL field pointing to the Github repository.
 0.1-3 : - Added conformance to new CRAN import policies.
+0.1.4 : - (Daniel Hicks) Fix for mutiple source files.
+      	- (Kyle J Harms) merging patched references to included files
+          in the main sync file.
