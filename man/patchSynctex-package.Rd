@@ -177,10 +177,9 @@ concordance for multifile projects (i. e. children chunks). }
 
 \references{
 
-  Duncan Murdoch's
-\href{http://cran.r-project.org/package=patchDVI}{patchDVI}
-has a great vignette explaining the basics of the problem :
-\url{http://cran.r-project.org/web/packages/patchDVI/patchDVI.pdf}
+  Duncan Murdoch's excellent
+  \href{https://CRAN.R-project.org/package=patchDVI}{patchDVI} has a
+  great vignette explaining the basics of the problem.
 
 }
 %% ~~ Optionally other standard keywords, one per line, from file KEYWORDS in ~~

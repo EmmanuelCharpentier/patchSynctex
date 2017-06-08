@@ -11,11 +11,13 @@
 }
 
 \usage{
-patchSynctex(nwfile, verbose=FALSE, ...)
+patchSynctex(nwfile, syncfile=NULL, verbose=FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{nwfile}{ name of the file to patch (used sans extension).  }
+  \item{syncfile}{ output sync file (if nwfile is related to an included
+    file). }
   \item{verbose}{ if TRUE, emit a message stating the number of
     patches. Useful for debugging integration in your tools. }
   \item{\dots}{
@@ -40,8 +42,13 @@ patchSynctex(nwfile, verbose=FALSE, ...)
   favorite IDE to pass either the name of the noweb file or the name of
   the .tex file.
 
+  The \code{syncfile} argument allows to force the addition of the
+  patched references to the main syncfile for a document that uses
+  subfiles. This is a workaround that may or may not be well-supported
+  by \code{knitr} and/or your viewer.
+
   The function may raise errors (files not found), warnings (no patch
-  found to be done) or messages (number of patched locations.
+  found to be done) or messages (number of patched locations).
 
   This function is principally intended for use by programmable IDEs able
   to execute \code{R} code. It is documented mostly for debugging
@@ -53,7 +60,7 @@ patchSynctex(nwfile, verbose=FALSE, ...)
 
 \references{
 Duncan Murdoch's excellent \code{patchDVI} package:
-  \url{http://CRAN.R-project.org/package=patchDVI}. 
+  \url{https://cran.r-project.org/package=patchDVI}. 
 }
 
 \author{Jan Gleixner, Emmanuel Charpentier \email{emm.charpentier@free.fr}}
