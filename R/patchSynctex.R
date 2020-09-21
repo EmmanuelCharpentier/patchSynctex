@@ -3,7 +3,7 @@ function (nwfile, syncfile=NULL, verbose=FALSE, ...){
     ## require(tools)
     f=paste0(tools::file_path_sans_ext(nwfile), "-concordance.tex")
     if (!file.exists(f)) 
-        stop(f,"-concordance.tex file not found.", call.=TRUE)
+        stop(f,": file not found.", call.=TRUE)
     text<-readChar(f, file.info(f)$size);
     text<-gsub(" \\%\\n"," ",text)
     ## require(stringr)
